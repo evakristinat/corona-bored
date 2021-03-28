@@ -1,30 +1,54 @@
 <script>
-	export let name;
+  import Bored from './Bored.svelte';
+  import Modal from './Modal.svelte';
+  import Navigation from './Navigation.svelte';
+
+	// (/)kun ei haluta mitään tiettyä, rli random
+	//
+	let option ='?minaccessibility=0&maxaccessibility=0.5&participants=1';
+  let modalVisible = true;
+  let toggle = () => {
+    modalVisible ? (modalVisible = false) : (modalVisible = true);
+  };
+
+  // const getToDo = async () => {
+  //   const response = await fetch(`http://www.boredapi.com/api/activity/`);
+	// 	return await response.json();
+  // };
+
+	const getToDoOption = async (option) => {
+    const response = await fetch(`http://www.boredapi.com/api/activity${option}`);
+		return await response.json();
+  };
+
+	let promise = getToDoOption(option);
+	//https://svelte.dev/tutorial/await-blocks ja tuntiesimerkkejä
+	//käytetty apuna/esimerkkinä asynkronisuutta vaativissa osoissa.
+
+	const newIdea = () => {
+	promise =	getToDoOption(option)
+    }
+
 </script>
 
 <main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
+  <Navigation />
+  {#if modalVisible}
+    <Modal />
+  {:else}
+  <Bored {promise} on:click={newIdea} />
+	{/if}
 </main>
 
 <style>
-	main {
-		text-align: center;
-		padding: 1em;
-		max-width: 240px;
-		margin: 0 auto;
-	}
+  main {
+    text-align: center;
+    margin: 0;
+  }
 
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
-	}
-
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
-	}
+  @media (min-width: 640px) {
+    main {
+      max-width: none;
+    }
+  }
 </style>
