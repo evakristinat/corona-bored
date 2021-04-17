@@ -44,7 +44,7 @@
     </Header>
 
     <Route path="/"><Options /></Route>
-    <Route path="/random"><Random {promise} on:click={newIdea} /></Route>
+    <Route path="/random"><Random {promise} on:new={newIdea} /></Route>
     <Route path="/browse" component={Browse} />
   </Router>
   <!-- {#if modalVisible}

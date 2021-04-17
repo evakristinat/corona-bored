@@ -1,6 +1,11 @@
 <script>
-
+  import PageHeader from './PageHeader.svelte';
 </script>
+
 <div>
-<p>Browse</p>
+  <PageHeader pageName='Browse'/>
+
+  {#each  as }
+    
+  {/each}
 </div>

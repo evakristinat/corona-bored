@@ -1,9 +1,15 @@
 <script>
+  import PageHeader from './PageHeader.svelte';
   import { Button } from 'svelte-mui';
+  import { createEventDispatcher } from 'svelte';
+
+  const dispatch = createEventDispatcher();
   export let promise;
 </script>
 
 <section>
+  <PageHeader pageName='Random'/>
+
   <!--Await-blocks tehty käyttäen
     https://svelte.dev/tutorial/await-blocks-->
   <p>You could...</p>
@@ -14,9 +20,9 @@
   {:catch error}
     <p>{error.message}</p>
   {/await}
-  <Button on:click>OK</Button>
-  <Button on:click>Maybe something else</Button>
 
+  <Button on:click={() => dispatch('ok')}>OK</Button>
+  <Button on:click={() => dispatch('new')}>Maybe something else</Button>
 </section>
 
 <style>

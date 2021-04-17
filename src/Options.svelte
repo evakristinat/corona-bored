@@ -1,11 +1,12 @@
 <script>
-  import { Button, ButtonGroup } from 'svelte-mui';
+  import PageHeader from './PageHeader.svelte';
+  import { Button } from 'svelte-mui';
   import { createEventDispatcher } from 'svelte';
-  import { bind } from 'svelte/internal';
+  // import { bind } from 'svelte/internal';
 
   const dispatch = createEventDispatcher();
   export let rangelabel = 'How active do you feel?';
-  export let buttonLabel ='Alone or with people?'
+  export let buttonLabel = 'Alone or with people?';
   export let button1Clicked = true;
   export let button2Clicked = false;
 
@@ -14,23 +15,12 @@
 </script>
 
 <section>
-  <div class="headers">
-<slot name="eyebrowHeader">
-  <p>OPTIONS</p>
-</slot>
-  <slot name="optionsHeader">
-    <h2>Page header</h2>
-  </slot>
-  <slot>
-    <p>this tells you what happens here</p>
-  </slot>
-</div>
+  <PageHeader pageName='Options' />
 
-<form on:submit|preventDefault>
+  <form on:submit|preventDefault>
+    <!--Vaihtoehtoinen tapa kuvakkeiden käyttämiseen nappeina-->
 
-<!--Vaihtoehtoinen tapa kuvakkeiden käyttämiseen nappeina-->
-
-<!-- <div class="type">
+    <!-- <div class="type">
   <label for="this">Type of activity
 <input id="this" type="radio" value='1' bind:group={type}>
 <img src="user.svg" alt="">
@@ -43,52 +33,53 @@
 
 </div> -->
 
-  <div class="activity">
-    <label for="range">{rangelabel}</label>
-    <input
-      name="range-input"
-      id="range"
-      type="range"
-      min="0.0"
-      max="1.0"
-      step="0.1"
-      bind:value={activity}
-    />
-  </div>
-  <div class="quantity">
-   
-    <label for="one">{buttonLabel}</label>
+    <div class="activity">
+      <label for="range">{rangelabel}</label>
+      <input
+        name="range-input"
+        id="range"
+        type="range"
+        min="0.0"
+        max="1.0"
+        step="0.1"
+        bind:value={activity}
+      />
+    </div>
+    <div class="quantity">
+      <label for="one">{buttonLabel}</label>
 
-    <!--testaa pääkomponentissa Button bind:active!-->
+      <!--testaa pääkomponentissa Button bind:active!-->
 
-    <Button on:click={()=>dispatch('one')} icon dense outlined={button1Clicked}>
-      <!--app-svelteen kuvat-->
-      <slot name="iconButton1">
-        <img src="user.svg" alt="one" />
-      </slot>
-    </Button>
-    <Button on:click={()=>dispatch('two')} icon dense outlined={button2Clicked}>
-      <slot name="iconButton2">
-        <img src="users.svg" alt="group" />
-      </slot>
-      <!--app-svelteen kuvat-->
-    </Button>
-
-  </div>
-  <footer>
-  <Button type="submit">Let's go</Button>
-</footer>
-
-</form>
-
+      <Button
+        on:click={() => dispatch('one')}
+        icon
+        dense
+        outlined={button1Clicked}
+      >
+        <!--app-svelteen kuvat-->
+        <slot name="iconButton1">
+          <img src="user.svg" alt="one" />
+        </slot>
+      </Button>
+      <Button
+        on:click={() => dispatch('two')}
+        icon
+        dense
+        outlined={button2Clicked}
+      >
+        <slot name="iconButton2">
+          <img src="users.svg" alt="group" />
+        </slot>
+        <!--app-svelteen kuvat-->
+      </Button>
+    </div>
+    <footer>
+      <Button type="submit">Let's go</Button>
+    </footer>
+  </form>
 </section>
 
 <style>
-  .headers{
-    text-align: left;
-    padding-left: 3vw;
-    padding-bottom: 3vh;
-  }
   .quantity,
   .activity {
     padding: 5%;
@@ -96,14 +87,12 @@
     grid-template-columns: auto auto auto;
   }
 
-  label{
+  label {
     justify-self: left;
   }
 
-  footer{
+  footer {
     text-align: right;
     padding-top: 4vh;
   }
-
-
 </style>
