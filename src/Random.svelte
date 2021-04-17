@@ -14,9 +14,9 @@
   {:catch error}
     <p>{error.message}</p>
   {/await}
-
-  <Button on:click>Maybe something else</Button>
   <Button on:click>OK</Button>
+  <Button on:click>Maybe something else</Button>
+
 </section>
 
 <style>
