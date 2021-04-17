@@ -4,15 +4,19 @@
 </script>
 
 <section>
+  <!--Await-blocks tehty käyttäen
+    https://svelte.dev/tutorial/await-blocks-->
   <p>You could...</p>
   {#await promise}
     <p>loading</p>
   {:then todo}
     <h4>{todo.activity}</h4>
+  {:catch error}
+    <p>{error.message}</p>
   {/await}
-  <!--Virheenkäsittely?-->
-  <Button on:click>YES</Button>
+
   <Button on:click>Maybe something else</Button>
+  <Button on:click>OK</Button>
 </section>
 
 <style>

@@ -1,8 +1,12 @@
 <script>
-  import Bored from './Bored.svelte';
-  import Start from './Start.svelte';
-  import Navigation from './Navigation.svelte';
-
+  import Random from './Random.svelte';
+  import Options from './Options.svelte';
+  // import Start from './Start.svelte';
+  import Header from './Header.svelte';
+  import { Router, Link, Route } from 'svelte-routing';
+  import Browse from './Browse.svelte';
+  export let url = '';
+  const header = 'corona-bored';
 
   // (/)kun ei haluta mitään tiettyä, eli random
   //
@@ -24,22 +28,30 @@
     return await response.json();
   };
 
-  let promise = getToDoOption(option);
-  //https://svelte.dev/tutorial/await-blocks ja tuntiesimerkkejä
-  //käytetty apuna/esimerkkinä asynkronisuutta vaativissa osoissa.
+  let promise = getToDoOption('');
 
   const newIdea = () => {
-    promise = getToDoOption(option);
+    promise = getToDoOption('');
   };
 </script>
 
 <main>
-  <Navigation />
-  {#if modalVisible}
+  <Router {url}>
+    <Header {header}>
+      <Link to="/" slot="1">Options</Link>
+      <Link to="/random" slot="2">Random</Link>
+      <Link to="/browse" slot="3">Browse</Link>
+    </Header>
+
+    <Route path="/"><Options /></Route>
+    <Route path="/random"><Random {promise} on:click={newIdea} /></Route>
+    <Route path="/browse" component={Browse} />
+  </Router>
+  <!-- {#if modalVisible}
     <Start on:yes={()=> console.log('yes')} on:no={()=> console.log('no')} on:ready={toggle} />
   {:else}
-    <Bored {promise} on:click={newIdea} />
-  {/if}
+    <Random {promise} on:click={newIdea} />
+  {/if} -->
 </main>
 
 <style>

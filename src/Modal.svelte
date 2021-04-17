@@ -59,7 +59,7 @@ komponentissa.
     font-weight: 200;
     text-transform: lowercase;
   }
-
+/* 
   .background {
     position: fixed;
     background-color: rgba(48, 47, 47, 0.74);
@@ -79,9 +79,9 @@ komponentissa.
     z-index: 10;
     border-radius: 50px;
     padding: 2%;
-  }
-  .text-screen:before {
+  } */
+  /* .text-screen:before {
     filter: blur(10px);
-  }
+  } */
 
 </style>
