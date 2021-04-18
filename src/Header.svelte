@@ -29,9 +29,8 @@
   ul {
     list-style: none;
   }
-  li{
+  li {
     font-size: 1em;
     padding: 1vh;
   }
-
 </style>

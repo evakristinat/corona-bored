@@ -1,10 +1,13 @@
 <script>
   import Random from './Random.svelte';
   import Options from './Options.svelte';
+  import Browse from './Browse.svelte';
   // import Start from './Start.svelte';
   import Header from './Header.svelte';
+  import customActivities from './store';
+
   import { Router, Link, Route } from 'svelte-routing';
-  import Browse from './Browse.svelte';
+
   export let url = '';
   const header = 'corona-bored';
 
@@ -28,6 +31,24 @@
     return await response.json();
   };
 
+  const getMany = () => {
+    let toDos = [];
+    for (let i = 0; i < 6; i++) {
+      const response = getToDoOption('');
+      toDos = [...toDos, response];
+    }
+    Promise.all(toDos).then((data) => {
+      customActivities.add(data);
+      console.log($customActivities);
+      return data;
+    });
+  };
+
+  let activities = getMany();
+
+  // customActivities.add
+  // getMany();
+
   let promise = getToDoOption('');
 
   const newIdea = () => {
@@ -45,7 +66,7 @@
 
     <Route path="/"><Options /></Route>
     <Route path="/random"><Random {promise} on:new={newIdea} /></Route>
-    <Route path="/browse" component={Browse} />
+    <Route path="/browse"><Browse activities={$customActivities}/></Route>
   </Router>
   <!-- {#if modalVisible}
     <Start on:yes={()=> console.log('yes')} on:no={()=> console.log('no')} on:ready={toggle} />
