@@ -1,12 +1,12 @@
 <script>
 
-import { createEventDispatcher } from 'svelte';
+// import { createEventDispatcher } from 'svelte';
 
   // import Modal from './Modal.svelte';
 
   import { Button, Dialog } from 'svelte-mui';
 
-  const dispatch = createEventDispatcher();
+  // const dispatch = createEventDispatcher();
 
 </script>
 
@@ -25,10 +25,10 @@ import { createEventDispatcher } from 'svelte';
 </Dialog>
 
 <style>
-  input {
+  /* input {
     display: block;
     margin: auto;
     width: 60vw;
     margin-top: 2%;
-  }
+  } */
 </style>

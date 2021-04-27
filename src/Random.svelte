@@ -8,8 +8,9 @@
 </script>
 
 <section>
-  <PageHeader pageName='Random'/>
-
+  <slot name="header">
+    <PageHeader pageName="Random" />
+  </slot>
   <!--Await-blocks tehty käyttäen
     https://svelte.dev/tutorial/await-blocks-->
   <p>You could...</p>
@@ -23,6 +24,8 @@
 
   <Button on:click={() => dispatch('ok')}>OK</Button>
   <Button on:click={() => dispatch('new')}>Maybe something else</Button>
+  
+  <slot name="footer" />
 </section>
 
 <style>

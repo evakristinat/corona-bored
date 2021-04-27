@@ -1,23 +1,31 @@
 <script>
   import PageHeader from './PageHeader.svelte';
   import { Button } from 'svelte-mui';
+  import { navigate } from 'svelte-routing';
   import { createEventDispatcher } from 'svelte';
-  // import { bind } from 'svelte/internal';
 
   const dispatch = createEventDispatcher();
   export let rangelabel = 'How active do you feel?';
   export let buttonLabel = 'Alone or with people?';
-  export let button1Clicked = true;
-  export let button2Clicked = false;
 
-  export let activity = 0.5;
+  let activity = 0.5;
   // export let type ='';
+  let social = false;
+
+  const toggle = () => {
+    !social ? (social = true) : (social = false);
+  };
+
+  const send = () => {
+    dispatch('send', { activity, social });
+    navigate('result');
+  };
 </script>
 
 <section>
-  <PageHeader pageName='Options' />
+  <PageHeader pageName="Options" />
 
-  <form on:submit|preventDefault>
+  <form on:submit|preventDefault={send}>
     <!--Vaihtoehtoinen tapa kuvakkeiden käyttämiseen nappeina-->
 
     <!-- <div class="type">
@@ -50,23 +58,13 @@
 
       <!--testaa pääkomponentissa Button bind:active!-->
 
-      <Button
-        on:click={() => dispatch('one')}
-        icon
-        dense
-        outlined={button1Clicked}
-      >
+      <Button on:click={toggle} type="button" icon dense outlined={!social}>
         <!--app-svelteen kuvat-->
         <slot name="iconButton1">
           <img src="user.svg" alt="one" />
         </slot>
       </Button>
-      <Button
-        on:click={() => dispatch('two')}
-        icon
-        dense
-        outlined={button2Clicked}
-      >
+      <Button on:click={toggle} type="button" icon dense outlined={social}>
         <slot name="iconButton2">
           <img src="users.svg" alt="group" />
         </slot>

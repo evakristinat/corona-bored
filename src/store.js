@@ -7,6 +7,7 @@ const customActivities = {
   add: (a) => {
     activities.set(a);
   },
+  clear: () => activities.set([]),
 };
 
 export default customActivities;

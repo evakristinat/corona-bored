@@ -5,6 +5,7 @@
   // import Start from './Start.svelte';
   import Header from './Header.svelte';
   import customActivities from './store';
+  // import { navigate } from 'svelte-routing';
 
   import { Router, Link, Route } from 'svelte-routing';
 
@@ -14,14 +15,18 @@
   const chill = 'type=cooking&type=relaxation&type=busywork&type=educational';
   const social = 'type=social';
   const header = 'corona-bored';
+  let randomNumber;
+  const getRandomNumber = () => {
+    randomNumber = Math.floor(Math.random() * 4) + 2;
+  };
 
   // (/)kun ei haluta mitään tiettyä, eli random
   //
-  let option = '?minaccessibility=0&maxaccessibility=0.5&participants=1';
-  let modalVisible = true;
-  let toggle = () => {
-    modalVisible ? (modalVisible = false) : (modalVisible = true);
-  };
+  let options;
+  // let modalVisible = true;
+  // let toggle = () => {
+  //   modalVisible ? (modalVisible = false) : (modalVisible = true);
+  // };
 
   // const getToDo = async () => {
   //   const response = await fetch(`http://www.boredapi.com/api/activity/`);
@@ -52,16 +57,33 @@
     });
   };
 
-  //lifesycle on init
+  //lifecycle on init
   $: activities = getMany(type);
 
   // customActivities.add
   // getMany();
 
-  let promise = getToDoOption('');
+  const promiseop = () => {
+    if (options) {
+      getRandomNumber();
+      console.log(randomNumber)
+      return getToDoOption(options);
+    } else {
+      return getToDoOption('');
+    }
+  };
+  let promise = promiseop();
 
   const newIdea = () => {
-    promise = getToDoOption('');
+    promise = promiseop();
+  };
+
+  const getOptions = (ce) => {
+    getRandomNumber();
+    const participants = ce.detail.social ? randomNumber : 1;
+    options = `?minaccessibility=0&maxaccessibility=${ce.detail.activity}&participants=${participants}`;
+
+    newIdea();
   };
 </script>
 
@@ -69,13 +91,13 @@
   <Router {url}>
     <Header {header}>
       <Link to="/" slot="1">Options</Link>
-      <Link to="/random" slot="2">Random</Link>
+      <Link to="/result" slot="2">Random</Link>
       <Link to="/browse" slot="3">Browse</Link>
     </Header>
 
-    <Route path="/"><Options /></Route>
-    <Route path="/random"><Random {promise} on:new={newIdea} /></Route>
-    <Route path="/browse"
+    <Route path="/"><Options on:send={getOptions} /></Route>
+    <Route path="result"><Random {promise} on:new={newIdea} /></Route>
+    <Route path="browse"
       ><Browse
         activities={$customActivities}
         on:new={getMany}
@@ -84,6 +106,7 @@
         on:social={() => (type = social)}
       /></Route
     >
+    <!-- <Route path="result" component={Result} /> -->
   </Router>
   <!-- {#if modalVisible}
     <Start on:yes={()=> console.log('yes')} on:no={()=> console.log('no')} on:ready={toggle} />
