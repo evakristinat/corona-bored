@@ -9,6 +9,10 @@
   import { Router, Link, Route } from 'svelte-routing';
 
   export let url = '';
+  let type = '';
+  const active = 'type=recreational&type=charity&type=music';
+  const chill = 'type=cooking&type=relaxation&type=busywork&type=educational';
+  const social = 'type=social';
   const header = 'corona-bored';
 
   // (/)kun ei haluta mitään tiettyä, eli random
@@ -26,17 +30,21 @@
 
   const getToDoOption = async (option) => {
     const response = await fetch(
-      `http://www.boredapi.com/api/activity${option}`
+      `http://www.boredapi.com/api/activity?${option}`
     );
     return await response.json();
   };
+  //virheenkäsittely
 
-  const getMany = () => {
+  const getMany = (type) => {
     let toDos = [];
-    for (let i = 0; i < 6; i++) {
-      const response = getToDoOption('');
-      toDos = [...toDos, response];
+    while (toDos.length < 6) {
+      const option = getToDoOption(type);
+      //syötetään uusia lupauksia taulukkoon
+      console.log(option);
+      toDos = [...toDos, option];
     }
+    //luvataan kaikki taulukon lupaukset
     Promise.all(toDos).then((data) => {
       customActivities.add(data);
       console.log($customActivities);
@@ -44,7 +52,8 @@
     });
   };
 
-  let activities = getMany();
+  //lifesycle on init
+  $: activities = getMany(type);
 
   // customActivities.add
   // getMany();
@@ -66,7 +75,15 @@
 
     <Route path="/"><Options /></Route>
     <Route path="/random"><Random {promise} on:new={newIdea} /></Route>
-    <Route path="/browse"><Browse activities={$customActivities}/></Route>
+    <Route path="/browse"
+      ><Browse
+        activities={$customActivities}
+        on:new={getMany}
+        on:active={() => (type = active)}
+        on:chill={() => (type = chill)}
+        on:social={() => (type = social)}
+      /></Route
+    >
   </Router>
   <!-- {#if modalVisible}
     <Start on:yes={()=> console.log('yes')} on:no={()=> console.log('no')} on:ready={toggle} />
