@@ -9,14 +9,22 @@
   import Email from './Email.svelte';
 
   import { Router, Link, Route, navigate } from 'svelte-routing';
+  import { onMount } from 'svelte';
 
   export let url = '';
-  let activityType;
+  const header = 'corona-bored';
+
+
+  //active, chill ja social antavat arvot Categories-komponentin vaihtoehdoille.
   const active = 'type=recreational&type=charity&type=music';
   const chill = 'type=cooking&type=relaxation&type=busywork&type=educational';
   const social = 'type=social';
-  const header = 'corona-bored';
+  //activityTypeen sijoitetaan valittu tyyppi (active,chill,social)
+  let activityType;
+//selected saa arvon kun käyttäjä valitsee ehdotuksen Random-komponentissa.
+//tieto välitetään sitten Email-komponentille näytettäväksi.
   let selected;
+  //randomNumber kertoo funktiolle
   let randomNumber;
   const getRandomNumber = () => {
     randomNumber = Math.floor(Math.random() * 4) + 2;
@@ -51,6 +59,7 @@
   };
 
   $: getMany(activityType);
+
   let promiseOptions = getToDoOption('');
 
   const getOptions = (ce) => {
@@ -60,18 +69,23 @@
     promiseOptions = getToDoOption(options);
     navigate('result');
   };
+  //alkuarvo random-ehdotukselle. Tämän vuoksi ei ole tarpeen käyttää onMount
+  let promise;
 
-  let promise = getToDoOption('');
+  onMount(() => (promise = getToDoOption('')));
 
+  //päivittää ehdotuksen valinnoilla. Käytössä Options-komponentin läpikäymisen jälkeen.
   const promiseop = () => {
     getRandomNumber();
     promiseOptions = getToDoOption(options);
   };
 
+  //päivittää random-ehdotuksen
   const newIdea = () => {
     promise = getToDoOption('');
   };
 
+  //hakee hyväksytyn tekemisehdotuksen ja asettaa sen selected muuttujaan, joka välitetään Email-komponentille.
   const getSelected = (ce) => {
     console.log(ce.detail.innerText);
     selected = ce.detail.innerText;
@@ -81,6 +95,7 @@
 
 <!--LISÄÄ MAIN OSIO-->
 <div id="app">
+  <!--Router-osion pohja täältä: https://www.npmjs.com/package/svelte-routing -->
   <Router {url}>
     <Header {header}>
       <Link to="/" slot="1">Options</Link>

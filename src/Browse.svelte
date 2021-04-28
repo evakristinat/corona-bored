@@ -18,7 +18,10 @@
   <!-- {:else} -->
 
     <div class="grid">
-      <!--ei käytetty id:tä, koska tupla-arvot ovat mahdollisia-->
+      <!--ei käytetty id:tä, koska tupla-arvot ovat mahdollisia, eikä poistoja tehdä.
+       tupla-arvojen poistaminen olisi mahdollista tekemällä esim. storeen metodin, 
+       joka käy taulukon läpi ja poistaa tuplat (filter tai Set). Mikäli sitten yksittäisiä
+      poistoja haluttaisiin tehdä, siihen voitaisiin käyttää activityn key-ominaisuutta -->
       {#each activities as activity}
         <div class="grid-item">
           <p>{activity.activity}</p>

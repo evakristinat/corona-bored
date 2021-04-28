@@ -3,23 +3,24 @@
   import { createEventDispatcher } from 'svelte';
 
   const dispatch = createEventDispatcher();
-  export let chill = 'chill';
-  export let active = 'active';
-  export let social = 'social';
+  // export let chill = 'chill';
+  // export let active = 'active';
+  // export let social = 'social';
+  
 </script>
 
 <!--Käytä näihin get context-->
 
 <div class="buttongroup">
-  <Button on:click={()=> dispatch(chill)}>
+  <Button on:click={()=> dispatch('chill')}>
     <img src="" alt="" />
     Chill</Button
   >
-  <Button on:click={()=> dispatch(active)}>
+  <Button on:click={()=> dispatch('active')}>
     <img src="" alt="" />
     Active</Button
   >
-  <Button on:click={()=> dispatch(social)}>
+  <Button on:click={()=> dispatch('social')}>
     <img src="" alt="" />
     Social</Button
   >
