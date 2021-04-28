@@ -1,3 +1,6 @@
+//Store ei ole tähän tarkoitukseen tarpeellinen, koska tätä tietoa tarvitsee vain yksi komponentti,
+//mutta halusin näyttää, että storen käyttö onnistuu.
+
 import { writable } from 'svelte/store';
 
 export const activities = writable([]);

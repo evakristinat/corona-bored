@@ -2,7 +2,8 @@
   export let pageName = 'Page name';
 </script>
 
-<div class="headers">
+<header class="headers">
+
   <slot name="eyebrowHeader">
     <p>{pageName.toUpperCase()}</p>
   </slot>
@@ -12,7 +13,7 @@
   <slot name="info">
     <p>info slot - this tells you what happens here</p>
   </slot>
-</div>
+</header>
 
 <style>
   .headers {
