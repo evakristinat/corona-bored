@@ -1,7 +1,6 @@
 <script>
   import PageHeader from './PageHeader.svelte';
   import { Button } from 'svelte-mui';
-  import { navigate } from 'svelte-routing';
   import { createEventDispatcher } from 'svelte';
 
   const dispatch = createEventDispatcher();
@@ -15,17 +14,13 @@
   const toggle = () => {
     !social ? (social = true) : (social = false);
   };
-
-  const send = () => {
-    dispatch('send', { activity, social });
-    navigate('result');
-  };
+   
 </script>
 
 <section>
   <PageHeader pageName="Options" />
 
-  <form on:submit|preventDefault={send}>
+  <form on:submit|preventDefault={()=> dispatch('send', { activity, social })}>
     <!--Vaihtoehtoinen tapa kuvakkeiden käyttämiseen nappeina-->
 
     <!-- <div class="type">

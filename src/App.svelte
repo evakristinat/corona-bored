@@ -16,6 +16,7 @@
   const chill = 'type=cooking&type=relaxation&type=busywork&type=educational';
   const social = 'type=social';
   const header = 'corona-bored';
+  let selected;
   let randomNumber;
   const getRandomNumber = () => {
     randomNumber = Math.floor(Math.random() * 4) + 2;
@@ -25,10 +26,10 @@
 
   const getToDoOption = async (option) => {
     const response = await fetch(
-      `https://www.boredapi.com/api/activity?${option}`
+      `http://www.boredapi.com/api/activity?${option}`
     );
     return await response.json();
-    }
+  };
 
   const getMany = async (type) => {
     let toDos = [];
@@ -41,6 +42,7 @@
     Promise.all(toDos)
       .then((data) => {
         customActivities.add(data);
+        console.log(data);
         return data;
       })
       .catch((error) => {
@@ -49,68 +51,52 @@
   };
 
   $: getMany(activityType);
+  let promiseOptions = getToDoOption('');
 
   const getOptions = (ce) => {
     getRandomNumber();
     const participants = ce.detail.social ? randomNumber : 1;
-    options = `?minaccessibility=0&maxaccessibility=${ce.detail.activity}&participants=${participants}`;
+    options = `minaccessibility=0&maxaccessibility=${ce.detail.activity}&participants=${participants}`;
+    promiseOptions = getToDoOption(options);
     navigate('result');
-    newIdea();
   };
 
-  // const promiseop = () => {
-  //   getRandomNumber();
-  //   return getToDoOption(options);
+  let promise = getToDoOption('');
 
-    const promiseop = () => {
-    if (options) {
-      getRandomNumber();
-      console.log(randomNumber)
-      return getToDoOption(options);
-    } else {
-      return getToDoOption('');
-    }
+  const promiseop = () => {
+    getRandomNumber();
+    promiseOptions = getToDoOption(options);
   };
-  let promise = promiseop();
 
   const newIdea = () => {
-    promise = promiseop();
-  }
-  //   if (options) {
-  //     promiseop()
-  //   } else {
-  //     getToDoOption();
-  //   }
-  // };
+    promise = getToDoOption('');
+  };
 
-  const refresh=()=>{
-    
-  }
-
+  const getSelected = (ce) => {
+    console.log(ce.detail.innerText);
+    selected = ce.detail.innerText;
+    navigate('email');
+  };
 </script>
 
- <!--LISÄÄ MAIN OSIO-->
+<!--LISÄÄ MAIN OSIO-->
 <div id="app">
   <Router {url}>
     <Header {header}>
       <Link to="/" slot="1">Options</Link>
-      <Link to="/random" slot="2" on:click={refresh}>Random</Link>
+      <Link to="/random" slot="2">Random</Link>
       <Link to="/browse" slot="3">Browse</Link>
     </Header>
 
     <Route path="/"><Options on:send={getOptions} /></Route>
     <Route path="random"
-      ><Random
-        promise={promise}
-        on:new={newIdea}
-        on:ok={() => navigate('email')}
-      /></Route
+      ><Random {promise} on:new={newIdea} on:ok={getSelected} /></Route
     >
     <Route path="result"
       ><Random
-        promise={promise}
-        on:new={newIdea}
-        on:ok={() => navigate('email')}
+        promise={promiseOptions}
+        on:new={promiseop}
+        on:ok={getSelected}
       /></Route
     >
     <Route path="browse"
@@ -123,7 +109,7 @@
       /></Route
     >
 
-    <Route path="email"><Email /></Route>
+    <Route path="email"><Email selectedToDo={selected} /></Route>
     <!-- <Route path="result" component={Result} /> -->
   </Router>
   <!-- {#if modalVisible}
