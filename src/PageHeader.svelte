@@ -1,14 +1,14 @@
 <script>
   export let pageName = 'Page name';
+
 </script>
 
 <header class="headers">
-
   <slot name="eyebrowHeader">
-    <p>{pageName.toUpperCase()}</p>
+    <h3>{pageName.toUpperCase()}</h3>
   </slot>
   <slot name="pageHeader">
-    <h2>Page header slot</h2>
+  
   </slot>
   <slot name="info">
     <p>info slot - this tells you what happens here</p>
@@ -18,7 +18,10 @@
 <style>
   .headers {
     text-align: left;
-    padding-left: 3vw;
-    padding-bottom: 3vh;
+    padding-bottom:3em;
+    padding-top: 1em;
+    width: 90%;
+    max-width: 800px;
+    margin: auto;
   }
 </style>

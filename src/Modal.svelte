@@ -59,16 +59,16 @@ komponentissa.
     font-weight: 200;
     text-transform: lowercase;
   }
-/* 
+
   .background {
     position: fixed;
     background-color: rgba(48, 47, 47, 0.74);
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
+    left: 0px;
     margin: 0;
     padding: 0;
     z-index: 5;
-    background-image: linear-gradient(to bottom right, pink, blue);
   }
   .text-screen {
     background-color: rgba(250, 247, 241, 0.623);
@@ -79,9 +79,9 @@ komponentissa.
     z-index: 10;
     border-radius: 50px;
     padding: 2%;
-  } */
-  /* .text-screen:before {
+  } 
+ .text-screen:before {
     filter: blur(10px);
-  } */
+  }
 
 </style>

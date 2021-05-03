@@ -1,63 +1,106 @@
 <script>
   import PageHeader from './PageHeader.svelte';
   import Categories from './Categories.svelte';
+  import customActivities from './activities';
+
+  import { slide } from 'svelte/transition';
   import { Button } from 'svelte-mui';
   import { createEventDispatcher } from 'svelte';
 
   const dispatch = createEventDispatcher();
-
-  export let activities;
-  // export let selection = true;
 </script>
 
-<div class="container">
-  <PageHeader pageName="Browse" />
+<div class="container" transition:slide={{ duration: 900 }}>
+  <PageHeader pageName="Browse">
+    <p slot="info">Browse suggestions based on wanted category</p>
+  </PageHeader>
 
-  <!-- {#if !selection} -->
-    <Categories on:chill on:active on:social />
-  <!-- {:else} -->
-
+  <Categories />
+  <div class="content">
     <div class="grid">
-      <!--ei käytetty id:tä, koska tupla-arvot ovat mahdollisia, eikä poistoja tehdä.
-       tupla-arvojen poistaminen olisi mahdollista tekemällä esim. storeen metodin, 
-       joka käy taulukon läpi ja poistaa tuplat (filter tai Set). Mikäli sitten yksittäisiä
-      poistoja haluttaisiin tehdä, siihen voitaisiin käyttää activityn key-ominaisuutta -->
-      {#each activities as activity}
-        <div class="grid-item">
-          <p>{activity.activity}</p>
-          <!--rahamerkki hinnan mukaan?-->
+      
+      <!--ei käytetty id:tä, koska arvot on varmistettu uniikeiksi jo aikaisemmin, eikä poistoja tehdä -->
+      {#each $customActivities as activity}
+        <div class="activity">
+          <p>
+            {activity}
+          </p>
         </div>
       {/each}
+      <div class="refresh">
+        <Button
+          on:click={() => dispatch('new')}
+          raised
+          shaped
+          color="rgb(250, 252, 246)">Refresh</Button
+        >
+      </div>
     </div>
-    <div class="refresh">
-      <Button on:click={() => dispatch('new')}>Refresh</Button>
-    </div>
-  <!-- {/if} -->
+  </div>
 </div>
 
 <style>
   .container {
     height: 100%;
+    background-color: rgba(216, 180, 147, 0.185);
+    margin: auto;
+  }
+  .content {
+    width: 90%;
+    max-width: 800px;
+    margin: auto;
   }
   .grid {
-    max-width: 90%;
-    height: 100%;
-    margin: auto;
     display: grid;
-    grid-template-columns: 50% 50%;
-    grid-template-rows: 5em 5em 5em;
-    gap: 0.5em;
+    width: 100%;
+    height: 300px;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 50% 50%;
+    margin-top: 80px;
+    gap: 1em;
+    align-content: center;
   }
 
-  .grid-item {
-    outline: auto;
+  .activity {
+    background-color: rgb(255, 255, 255);
+    padding: 7%;
+    box-shadow: -2px 5px 15px -7px rgba(83, 83, 83, 0.32);
+    transition: 0.2s;
+    border-radius: 3px;
+  }
+
+  .activity > p {
+    font-size: 1em;
+  }
+
+  .activity:hover {
+    box-shadow: -2px 5px 15px -1px rgba(83, 83, 83, 0.32);
+    transform: scale(1.1);
   }
   p {
     font-size: 0.8em;
     height: max-content;
     align-self: center;
   }
-  .refresh{
+  .refresh {
     width: 20%;
+    padding: 3%;
+  }
+
+  @media (max-width: 400px) {
+    .grid {
+      padding-top: 22%;
+      width: 90%;
+      max-width: 600px;
+      max-height: 600px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 15vh 15vh 15vh;
+      gap: 0.5em;
+    }
+    .activity > p {
+      font-size: 0.8em;
+    }
   }
 </style>

@@ -1,91 +1,106 @@
 <script>
   import PageHeader from './PageHeader.svelte';
-  import { Button } from 'svelte-mui';
+  import { Button} from 'svelte-mui';
   import { createEventDispatcher } from 'svelte';
+  import { slide } from 'svelte/transition';
 
   const dispatch = createEventDispatcher();
-  export let rangelabel = 'How active do you feel?';
-  export let buttonLabel = 'Alone or with people?';
+  export let rangelabel = '?';
+  export let buttonLabel = '?';
 
   let activity = 0.5;
-  // export let type ='';
   let social = false;
 
   const toggle = () => {
     !social ? (social = true) : (social = false);
   };
-   
 </script>
 
-<section>
-  <PageHeader pageName="Options" />
-
-  <form on:submit|preventDefault={()=> dispatch('send', { activity, social })}>
-    <!--Vaihtoehtoinen tapa kuvakkeiden käyttämiseen nappeina-->
-
-    <!-- <div class="type">
-  <label for="this">Type of activity
-<input id="this" type="radio" value='1' bind:group={type}>
-<img src="user.svg" alt="">
-</label>
-
-<label for="that">
-<input id="that" type="radio" value='2' bind:group={type}> 
-<img src="users.svg" alt="">
-</label>
-
-</div> -->
-
-    <div class="activity">
-      <label for="range">{rangelabel}</label>
-      <input
-        name="range-input"
-        id="range"
-        type="range"
-        min="0.0"
-        max="1.0"
-        step="0.1"
-        bind:value={activity}
-      />
-    </div>
-    <div class="quantity">
-      <label for="one">{buttonLabel}</label>
-
-      <!--testaa pääkomponentissa Button bind:active!-->
-
-      <Button on:click={toggle} type="button" icon dense outlined={!social}>
-        <!--app-svelteen kuvat-->
-        <slot name="iconButton1">
-          <img src="user.svg" alt="one" />
-        </slot>
-      </Button>
-      <Button on:click={toggle} type="button" icon dense outlined={social}>
-        <slot name="iconButton2">
-          <img src="users.svg" alt="group" />
-        </slot>
-        <!--app-svelteen kuvat-->
-      </Button>
-    </div>
-    <footer>
-      <Button type="submit">Let's go</Button>
-    </footer>
-  </form>
-</section>
+<div class="container" transition:slide={{ duration: 900 }}>
+  <PageHeader pageName="Options"
+    ><p slot="info">
+      Answer these questions to get customised suggestions on what to do
+    </p></PageHeader
+  >
+  <section>
+    <form
+      on:submit|preventDefault={() => dispatch('send', { activity, social })}
+    >
+      <div class="activity">
+        <label for="range">{rangelabel}</label>
+        <input
+          name="range-input"
+          id="range"
+          type="range"
+          min="0.0"
+          max="1.0"
+          step="0.1"
+          bind:value={activity}
+        />
+      </div>
+      <div class="quantity">
+        <label for="one">{buttonLabel}</label>
+        <span id="button1">
+          <Button on:click={toggle} type="button" icon dense outlined={!social}>
+           
+            <slot name="iconButton1" />
+      
+          </Button>
+        </span>
+        <span id="button2">
+          <Button on:click={toggle} type="button" icon dense outlined={social}>
+     
+            <slot name="iconButton2" />
+    
+          </Button>
+        </span>
+      </div>
+      <div class="submit">
+        <Button type="submit" raised>Let's go</Button>
+      </div>
+    </form>
+  </section>
+</div>
 
 <style>
+  .container {
+    background-color: rgb(216, 225, 228);
+    height: 100%;
+  }
+  section {
+    width: 90%;
+    max-width: 800px;
+    margin: auto;
+  }
+  form {
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+  }
   .quantity,
   .activity {
     padding: 5%;
     display: grid;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: 2fr 1fr 1fr;
   }
 
   label {
     justify-self: left;
+    text-align: left;
+    padding-right: 3em;
+  }
+  input {
+    grid-column: 2 / span 3;
   }
 
-  footer {
+  .submit {
     text-align: right;
     padding-top: 4vh;
+  }
+
+  @media (max-width: 400px) {
+    form {
+      width: 90%;
+    }
   }
 </style>

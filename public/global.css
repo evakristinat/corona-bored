@@ -1,9 +1,13 @@
-body {
-	margin: 0;
-	font-family: var(--button-font-family, Roboto, Helvetica, sans-serif);
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: var(--button-font-family, Roboto, Helvetica, sans-serif);
+  overflow: hidden;
 }
 a {
-	text-transform: uppercase;
-	text-decoration: none;
-	color: rgb(61, 60, 60);
+  text-transform: uppercase;
+  text-decoration: none;
+  color: rgb(61, 60, 60);
 }
+
+

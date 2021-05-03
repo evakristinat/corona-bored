@@ -22,13 +22,18 @@ Email
 Custom eventit:
 Random, Options
 
+getContext/setContext:
+App, Categories
+
 #each-lohko:
 Random
 
-Storet:
+Store:
 activities.js
 
 Animaatiot (motion, transition, animate):
+Transition: Start, Random, Options
+
 
 Ulkoisen datalähteen hyödyntäminen (Rest API):
 App (fetch, promise, promise.all, promisen käsittely)
@@ -65,3 +70,6 @@ Ikonit:
 
 https://icons.mono.company/
 MIT License
+
+https://pixabay.com/fi/
+Pixabay License 
