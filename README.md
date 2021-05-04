@@ -2,11 +2,11 @@
 ## CORONA-BORED
  ##### Harjoitustyö Frontend-perusteet -opintojaksolle.
 
-Koska työstä tuli huomattavasti odotettua suurempi, koitan säästää sen tarkistusaikaa sisällysluettelon avulla. 
+Corona-bored for the bored. 
 
 ## Sisältö
 
-Tässä luettelossa on listattu kaikki arvosana 5 vaadittavat asiat ja niiden sijainnit. Lisäsin myös listaan myös muutaman asian, jotka liittyvät opintojaksoon, mutta eivät olleet listassa.
+Tässä luettelossa on listattu kaikki vaadittavat asiat ja niiden sijainnit. Lisäsin myös listaan myös muutaman asian, jotka liittyvät opintojaksoon, mutta eivät olleet listassa.
 
 #### Bind:
 Email, Random
@@ -56,20 +56,20 @@ Avustettua koodia löytyy komponenteista App (navigaation peruspohja) ja Random 
 
 #### Lähteet:
 
-Data: 
+###### Data: 
 https://www.boredapi.com/ 
 
-Navigaatio: 
+###### Navigaatio: 
 
 https://dev.to/lukocastillo/svelte-3-how-to-integrate-with-svelte-routing-4j3b
 
 https://www.npmjs.com/package/svelte-routing
 
-Await-blocks:
+###### Await-blocks:
 https://svelte.dev/tutorial/await-blocks 
 
 
-Käytetyt kirjastot:
+###### Käytetyt kirjastot:
 
 https://www.npmjs.com/package/svelte-routing
 MIT License
@@ -77,7 +77,7 @@ MIT License
 https://svelte-mui.ibbf.ru/
 MIT License
 
-Ikonit:
+###### Ikonit:
 
 https://icons.mono.company/
 MIT License
