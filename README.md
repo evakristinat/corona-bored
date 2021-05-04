@@ -1,5 +1,6 @@
 
-## Tämä on harjoitustyö Frontend-perusteet -opintojaksolle.
+## CORONA-BORED
+ ##### Harjoitustyö Frontend-perusteet -opintojaksolle.
 
 Koska työstä tuli huomattavasti odotettua suurempi, koitan säästää sen tarkistusaikaa sisällysluettelon avulla. 
 
