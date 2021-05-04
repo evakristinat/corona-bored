@@ -1,63 +1,66 @@
 <script>
   import { createEventDispatcher } from 'svelte';
   import { slide } from 'svelte/transition';
-
   import { Button } from 'svelte-mui';
 
   const dispatch = createEventDispatcher();
+
+
 </script>
 
 <div class="container" transition:slide={{ duration: 900 }}>
   <div class="welcome">
-    <h1>welcome</h1>
+    <h1>Welcome</h1>
     <h2>
-      During the pandemic figuring out what to do isn't always easy but by answering a few questions we can find you something to do
+      During the pandemic figuring out what to do isn't always easy but by answering a few questions we can find you just the right thing
     </h2>
 
     <div class="cta">
-      <Button on:click={() => dispatch('options')} raised color="white"
+      <Button on:click={() => dispatch('options')} raised color="blue"
         >Get something to do!</Button
       >
     </div>
   </div>
 
   <div class="content">
-    <h3>If you're up for anything try random or browse!</h3>
-    <!-- Random gives you
-    , while in browse you can
-    select the type of activity that you're interested in and browse the
-    options until you find the right thing for you to do. -->
+    <h3>Features</h3>
+    <p>If you're up for anything try random or browse!</p>
+
     <div class="flexbox">
       <div id="browse" on:click={() => dispatch('browse')}>
-        <h2>BROWSE</h2>
+        <h2 id="browseHeader">BROWSE</h2>
         <p>
           Browse on suggestions of different categories and decide for yourself
         </p>
       </div>
+
       <div id="random" on:click={() => dispatch('random')}>
-        <h2>RANDOM</h2>
+        <h2 id="randomHeader">RANDOM</h2>
         <p>Get random suggestions on what to do until you find what you want</p>
       </div>
     </div>
   </div>
 </div>
 
-<!-- </Dialog> -->
 <style>
-  /* input {
-    display: block;
-    margin: auto;
-    width: 60vw;
-    margin-top: 2%;
-  } */
-
   .container {
     height: 100%;
+    background-color: rgb(234, 234, 245);
+    overflow: hidden;
+    contain: content;
+  }
+
+  .content{
+    bottom: 0px;
+    background-color: rgba(46, 47, 51, 0.89);
+    height: 50%;
+    padding-bottom: 1%;
+    margin: 0;
   }
 
   .welcome {
-    background-color: rgba(199, 212, 124, 0.438);
-    padding: 2%;
+    height: 30vh;
+    padding: 20px 0% 50px ;
     box-shadow: -2px 5px 15px -7px rgba(83, 83, 83, 0.32);
   }
 
@@ -68,23 +71,52 @@
   }
 
   .welcome > h2 {
+    font-size: 1.2em;
     font-weight: 400;
     max-width: 800px;
     margin: auto;
   } h3{
     width: 90%;
     padding-top: 4vh;
+    padding-bottom: 1vh;
     margin: auto;
-    font-size: 1.7em;
+    font-size: 1.5em;
     font-weight: 500;
+    color: white;
+  }
+  .content > p{
+    font-size: 1em;
+    color: rgba(255, 255, 255, 0.904);
+    padding-top: 1vh;
+    padding-bottom: 3vh;
+  }
+
+  #browse {
+    background-color: rgba(224, 224, 224, 0.089);
+  }
+  #random {
+    background-color: rgba(183, 105, 255, 0.068);
   }
 
   #browse > h2,
   #random > h2 {
+    font-size: 1.1em;
+    font-weight: 500;
     background-color: rgb(255, 255, 255);
     width: 100%;
     padding: 7% 0% 6%;
-    margin: 0;
+    margin-top: 0px;
+    cursor: pointer;
+  }
+
+  #browse > p,
+  #random > p {
+    font-size: 1em;
+    width: 90%;
+    margin: auto;
+    text-align: left;
+    color: white;
+    padding-bottom: 2vh;
   }
 
   p {
@@ -97,17 +129,15 @@
 
   .cta {
     margin-top: 4vh;
-    margin-bottom: 4vh;
+    margin-bottom: 1%;
   }
 
   .flexbox {
     display: flex;
-    width: 90%;
     max-width: 800px;
     margin: auto;
-    padding: 5%;
-    width: 80%;
-    height: 25vh;
+    width: 90%;
+    padding-bottom: 1vh;
     justify-content: space-around;
   }
 
@@ -124,24 +154,18 @@
     box-shadow: -2px 5px 15px -1px rgba(83, 83, 83, 0.32);
   }
 
-  #browse {
-    background-color: rgba(224, 224, 224, 0.438);
-  }
 
-  #random {
-    background-color: rgba(183, 105, 255, 0.123);
-  }
 
   @media (max-width: 400px) {
-    .content {
+    .container {
       padding-top: 5vh;
-      width: 90%;
-      height: 100%;
+      height: 95%;
       margin: auto;
     }
 
     .welcome {
       padding-bottom: 2vh;
+      margin: auto;
     }
     h1 {
       font-size: 1.2em;
@@ -168,7 +192,6 @@
     #browse > p,
     #random > p {
       font-size: 0.9em;
-      padding: 6% 5%;
     }
   }
 </style>

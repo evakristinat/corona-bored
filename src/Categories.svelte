@@ -1,22 +1,26 @@
 <script>
   import { Button } from 'svelte-mui';
   import { getContext } from 'svelte';
+ 
 
-  //getContextin avulla activitytype päivittyy suoraan app-komponenttiin.
-  const activityType = getContext('activityType');
+  //getContextin avulla setsetsetActivityType päivittyy suoraan app-komponenttiin.
+  const setActivityType = getContext('setActivityType');
 
   const active =
-    'type=recreational&type=charity&type=music&type=diy&minaccessibility=0.5&maxaccessibility=1.0';
+    '&type=charity&type=music&type=diy&type=recreational';
   const chill = 'type=cooking&type=relaxation&type=busywork&type=educational';
   const social = 'type=social';
 </script>
 
 <div class="container">
+
   <div class="buttongroup">
     <div>
       <Button
         id="chill"
-        on:click={() => activityType(chill)}
+        on:click={() => {
+          setActivityType(chill);
+        }}
         raised
         fullWidth
         color="rgb(250, 252, 246)"
@@ -29,7 +33,9 @@
     <div>
       <Button
         id="active"
-        on:click={() => activityType(active)}
+        on:click={() => {
+          setActivityType(active);
+        }}
         raised
         fullWidth
         color="rgb(250, 252, 246)"
@@ -42,7 +48,9 @@
     <div>
       <Button
         id="social"
-        on:click={() => activityType(social)}
+        on:click={() => {
+          setActivityType(social);
+        }}
         raised
         fullWidth
         color="rgb(250, 252, 246)"
@@ -56,22 +64,24 @@
 
 <style>
   .container {
-    width: 90%;
-    max-width: 800px;
+    width: 91%;
+    max-width: 813px;
     margin: auto;
+    background-color: rgba(234, 234, 245, 0.87);
+    overflow: hidden;
+    contain: content;
   }
   .buttongroup {
     display: flex;
-    /* flex-direction: column; */
     justify-content: space-between;
-    margin: 0px;
+    padding-top: 20px;
     width: 100%;
     height: 50px;
     align-content: flex-end;
   }
 
   .buttongroup > div {
-    width: 30%;
+    width: 40%;
     min-height: none;
     display: flex;
     align-items: center;
@@ -97,15 +107,12 @@
   @media (max-width: 360px) {
     .buttongroup {
       display: flex;
-      /* flex-direction: column; */
       justify-content: space-between;
       margin: auto;
       width: 90%;
       max-width: 800px;
       height: 50px;
-      margin: auto;
       align-content: flex-end;
-      background-color: white;
     }
     .buttongroup > div {
       max-width: 100px;

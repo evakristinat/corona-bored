@@ -1,13 +1,14 @@
 <script>
   import PageHeader from './PageHeader.svelte';
-  import { Button} from 'svelte-mui';
+  import { Button } from 'svelte-mui';
   import { createEventDispatcher } from 'svelte';
   import { slide } from 'svelte/transition';
 
+  //dispatch vastaa tapahtumien viennistä komponenttien välillä.
   const dispatch = createEventDispatcher();
+  //paljastetaan rangelabel ja buttonlabel muiden komponenttien muuutettavaksi.
   export let rangelabel = '?';
   export let buttonLabel = '?';
-
   let activity = 0.5;
   let social = false;
 
@@ -23,9 +24,12 @@
     </p></PageHeader
   >
   <section>
+    <!--formin luonnollinen toiminta estetään ja korvataan omalla tapahtumankäsittelijällä
+    tässä tapauksessa klikkauksen mukana kulkee activity ja social muuttujien arvot-->
     <form
       on:submit|preventDefault={() => dispatch('send', { activity, social })}
     >
+    <!--inputin arvo sidotaan kaksisuuntaisesti activity muuttujaan.-->
       <div class="activity">
         <label for="range">{rangelabel}</label>
         <input
@@ -42,21 +46,17 @@
         <label for="one">{buttonLabel}</label>
         <span id="button1">
           <Button on:click={toggle} type="button" icon dense outlined={!social}>
-           
             <slot name="iconButton1" />
-      
           </Button>
         </span>
         <span id="button2">
           <Button on:click={toggle} type="button" icon dense outlined={social}>
-     
             <slot name="iconButton2" />
-    
           </Button>
         </span>
       </div>
       <div class="submit">
-        <Button type="submit" raised>Let's go</Button>
+        <Button type="submit" raised color="blue">Let's go</Button>
       </div>
     </form>
   </section>
@@ -64,8 +64,10 @@
 
 <style>
   .container {
-    background-color: rgb(216, 225, 228);
+    background-color: rgb(234, 234, 245);
     height: 100%;
+    overflow: hidden;
+    contain: content;
   }
   section {
     width: 90%;
@@ -73,9 +75,12 @@
     margin: auto;
   }
   form {
-    width: 100%;
+    width: 90%;
     max-width: 800px;
     text-align: center;
+    background-color: white;
+    padding: 2%;
+    margin: 0;
   }
   .quantity,
   .activity {

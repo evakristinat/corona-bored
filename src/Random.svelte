@@ -9,6 +9,11 @@
   export let promise;
   export let header;
   let selectedToDo;
+
+  /*selected päivitetään aina kun selectedToDo muuttuu.
+    selectedToDo sisältää promisesta saatavan vastauksen 
+    esittävän elementin. Se käsitellään app-komponentissa*/
+  $: selected = selectedToDo;
 </script>
 
 <div class="container" transition:slide={{ duration: 900 }}>
@@ -18,10 +23,12 @@
         <p slot="info">Go through suggestions until you find something to do.</p>
       </PageHeader>
     </slot>
-    <div class="suggestion-box" duration="1s">
+    <div class="suggestion-box">
       <!--Await-blocks tehty käyttäen pohjana
     https://svelte.dev/tutorial/await-blocks-->
       <p>You could...</p>
+      <!--odotetaan lupausta, joka saadaan app-komponentilta
+          odottaessamme näämme spinnerin-->
       {#await promise}
         <div class="loading" transiton:fade>
           <Firework color="grey"/>
@@ -31,10 +38,10 @@
           <h4 bind:this={selectedToDo}>{todo.activity}</h4>
         </span>
       {:catch error}
-        <p>{error.message}</p>
+        <p class="error">{error.message}</p>
       {/await}
       <div class="box">
-      <Button on:click={() => dispatch('ok', selectedToDo)} raised color
+      <Button on:click={() => dispatch('ok', selected)} raised color
         >OK</Button
       >
       <Button on:click={() => dispatch('new')} raised color
@@ -48,20 +55,27 @@
 <style>
   .container {
     height: 100%;
-    background-color: rgb(193, 180, 199);
+    overflow: hidden;
+    contain: content;
+    background-color: rgb(234, 234, 245);
+  }
+  section{
+    height: 100%;
   }
 
   .suggestion-box {
-    width: 100%;
+    width: 80%;
+    max-width: 800px;
     margin: auto;
     padding-top:2vh;
     background-color: white;
     padding-bottom: 5%; 
     height: 20vh; 
+    box-shadow: -2px 5px 15px -7px rgba(83, 83, 83, 0.32);
   }
 
   h4,
-  .loading {
+  .loading, .error {
     padding-top: 2vh;
     padding-bottom: 3vh;
     height: 4em;
@@ -100,11 +114,8 @@
   }
 
   .loading {
-    position: absolute;
-    width: 4%;
-    margin-left: 48%;
-    margin-right: 48%;
-    top: 250px;
+    width: 1vh;
+    margin-left: 47%;
   }
 
   }

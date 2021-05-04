@@ -6,7 +6,8 @@ import {fade} from 'svelte/transition'
 </footer>
 <style>
 p{
-  padding-top: 0.8em;
+  height: 5%;
+  padding-top: 0.2em;
   color:lightgrey;
 }
 @media(max-width:400px){

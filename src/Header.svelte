@@ -1,14 +1,18 @@
 <script>
   export let header = 'Header';
   let clicked;
+  let class1;
+  let class2;
+  let class3;
 
-  const toggle = (e) => {
+  /*getClicked asettaa asettaa clicked muuttujaan klikatun elementin id:n.
+    ja muuttaa sitä vastaavan elementin luokan valituksi*/
+  const getClicked = (e) => {
     clicked = e.target.id;
+    class1 = clicked == 1 ? 'selected' : 'li';
+    class2 = clicked == 2 ? 'selected' : 'li';
+    class3 = clicked == 3 ? 'selected' : 'li';
   };
-
-  $: changeClass1 = clicked == 1 ? 'selected' : 'li';
-  $: changeClass2 = clicked == 2 ? 'selected' : 'li';
-  $: changeClass3 = clicked == 3 ? 'selected' : 'li';
 </script>
 
 <div class="container">
@@ -20,11 +24,11 @@
       <slot name="option" />
     </header>
     <nav>
-      <li id="1" on:click={toggle} class={changeClass1}><slot name="1" /></li>
-      <li id="2" on:click={toggle} class={changeClass2}>
+      <li id="1" on:click={getClicked} class={class1}><slot name="1" /></li>
+      <li id="2" on:click={getClicked} class={class2}>
         <slot name="2" />
       </li>
-      <li id="3" on:click={toggle} class={changeClass3}>
+      <li id="3" on:click={getClicked} class={class3}>
         <slot name="3" />
       </li>
     </nav>
@@ -33,7 +37,7 @@
 
 <style>
   .container {
-    background-color: lavender;
+    background-color: rgb(234, 234, 245);
   }
   #top-bar {
     width: 90%;
@@ -43,7 +47,8 @@
     height: 10%;
     min-height: 90px;
     justify-content: space-between;
-    align-items:center;
+    align-items: center;
+    z-index: 10;
   }
 
   header {
@@ -57,17 +62,18 @@
 
   nav {
     margin-top: 1vh;
-    background-color: lavender;
+    background-color: rgb(234, 234, 245);
     color: rgb(59, 58, 58);
     width: 75%;
     display: flex;
     justify-content: space-evenly;
   }
 
-  .li,li {
+  .li,
+  li {
     width: 100%;
-    background-color: rgb(255, 255, 255);
-    font-size: 1em;
+    font-size: 0.9em;
+    font-weight: 600;
     display: inline-block;
     text-align: center;
     line-height: 40px;

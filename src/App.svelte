@@ -20,22 +20,24 @@
   let options;
 
   //activityTypeen sijoitetaan valittu tyyppi (active,chill,social)
-
   let activityType;
+
+  setContext('activityType', activityType);
   /*setContext välittää activityType muuttujan päivittävän funktion
   categories-komponentille*/
-  setContext('activityType', (type) => (activityType = type));
+  setContext('setActivityType', (type) => (activityType = type));
 
   //selected saa arvon kun käyttäjä valitsee ehdotuksen Random-komponentissa.
   //tieto välitetään sitten Email-komponentille näytettäväksi.
   let selected;
-  //randomNumber kertoo funktiolle
-  let randomNumber;
 
+  /*randomNumber kertoo vaihtoehtoja hyödyntävälle ehdotushaulle osallistujien 
+  määrän 2-4, koska käyttöliittymä ei mahdollista tarkan lukumäärän antoa*/
   const getRandomNumber = () => {
-    randomNumber = Math.floor(Math.random() * 4) + 2;
+    return Math.floor(Math.random() * 3) + 2;
   };
 
+  //getToDo hakee aktiviteetin API:sta
   const getToDo = async (option) => {
     const response = await fetch(
       `http://www.boredapi.com/api/activity?${option}`
@@ -65,7 +67,6 @@
         while (unique.length > 6) {
           unique.pop();
         }
-        console.log(unique);
         return unique;
       })
       .then((data) => {
@@ -77,26 +78,29 @@
       });
   };
 
-  /*funktiota kutsutaan aina kun parametri muuttuu ja alustusvaiheessa.
-  Tämä hidastaa hieman alustamista, mutta browse-komponentin tiedot on näin haettu
-  jo kun se avataan ensimmäisen kerran, joten se on mielestäni hyväksyttävää. */
+  /*funktiota kutsutaan aina kun tyyppi muuttuu ja alustusvaiheessa.
+  Tämä hidastaa hieman alustamista, mutta se on mielestäni tässä tapauksessa hyväksyttävää. */
   $: getMany(activityType);
 
+  /* Funktio saa tiedon käyttäjän antamista tiedoista options-komponentissa ja kokoaa ne yhteen
+  käsiteltäväksi ja kutsuu niiden avulla ehdtotuksen noutavaa funktiota ja navigoi tuloksiin. */
   const getOptions = (ce) => {
-    getRandomNumber();
+    let randomNumber = getRandomNumber();
     const participants = ce.detail.social ? randomNumber : 1;
-    options = `minaccessibility=0&maxaccessibility=${ce.detail.activity}&participants=${participants}`;
+    options = `minaccessibility=0.0&maxaccessibility=${ce.detail.activity}&participants=${participants}`;
     promiseOptions = getToDo(options);
+    console.log(options);
     navigate('result');
   };
-  /*alkuarvo random-ehdotukselle. Tämän vuoksi ei ole tarpeen käyttää onMount
-  tämä ei toimi tämän sovelluksen toimintaan reitityksen vuoksi; mikäli yritetään
-  siityä suoraan random-polulle, onMount ei tee tehtäväänsä. */
+
+  /*promsise alkuarvo random-ehdotukselle. En käyttänyt onMount:ia
+  reitityksen vuoksi; mikäli yritetään siityä suoraan random-polulle,
+ onMount ei tee tehtäväänsä ajoissa*/
 
   promise = getToDo();
+
   //päivittää ehdotuksen valinnoilla. Käytössä Options-komponentin läpikäymisen jälkeen.
   const promiseop = () => {
-    getRandomNumber();
     promiseOptions = getToDo(options);
   };
 
@@ -110,22 +114,27 @@
     selected = ce.detail.innerText;
     navigate('email');
   };
-  //jakaa emai-komponentin kanssa kotisivulle navigoivan funktion
+
+  //jakaa email-komponentin kanssa kotisivulle navigoivan funktion
   setContext('backHome', () => {
     navigate('/');
   });
 </script>
-
+<!-- märitetään, että kohdellaan perinteisiä linkkejä router-linkkeinä-->
 <div id="app" use:links>
-  <!--Router-osion pohja täältä: https://www.npmjs.com/package/svelte-routing -->
-  <Router {url}>
-    <Header>
-      <a href="/" slot="header">{header}</a>
-      <a id="1" href="/options" slot="1">Options</a>
-      <a id="2" href="/random" slot="2">Random</a>
-      <a id="3" href="/browse" slot="3">Browse</a>
-    </Header>
-    <main>
+  <!--Router-osion hyvin yksinkertaistettu pohja täältä: https://www.npmjs.com/package/svelte-routing -->
+  <div class="container">
+    <!--Routerin on sijaittava juurikomponentissa, mutta niitä voi lisätä sen jälkeen myös muualle-->
+    <Router {url}>
+      <Header>
+        <a href="/" slot="header">{header}</a>
+        <a id="1" href="/options" slot="1">Options</a>
+        <a id="2" href="/random" slot="2">Random</a>
+        <a id="3" href="/browse" slot="3">Browse</a>
+      </Header>
+
+      <!-- Seuraavaksi määritetään url-polut komponenteille
+          navigate() ohjaa parametrina annetulle polulle-->
       <Route path="/"
         ><Start
           on:options={() => navigate('options')}
@@ -191,10 +200,12 @@
           on:ok={getSelected}
         /></Route
       >
-      <Route path="browse"><Browse on:new={getMany} /></Route>
-    </main>
-    <Route path="email"><Email selectedToDo={selected} /></Route>
-  </Router>
+      <Route path="browse"
+        ><Browse on:new={() => getMany(activityType)} /></Route
+      >
+      <Route path="email"><Email selectedToDo={selected} /></Route>
+    </Router>
+  </div>
   <Footer />
 </div>
 
@@ -202,7 +213,11 @@
   #app {
     text-align: center;
     margin: 0;
-    height: 85%;
+    height: 100%;
+  }
+  .container {
+    contain: content;
+    height: 95%;
   }
 
   a {

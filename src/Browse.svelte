@@ -18,8 +18,9 @@
   <Categories />
   <div class="content">
     <div class="grid">
-      
-      <!--ei käytetty id:tä, koska arvot on varmistettu uniikeiksi jo aikaisemmin, eikä poistoja tehdä -->
+      <!--näytetään kaikki storen aktiviteetit. Ei käytetty id:tä,
+         koska arvot on varmistettu uniikeiksi jo aikaisemmin,
+        eikä poistoja tehdä -->
       {#each $customActivities as activity}
         <div class="activity">
           <p>
@@ -42,8 +43,10 @@
 <style>
   .container {
     height: 100%;
-    background-color: rgba(216, 180, 147, 0.185);
+    background-color: rgb(234, 234, 245);
     margin: auto;
+    overflow: hidden;
+    contain: content;
   }
   .content {
     width: 90%;
@@ -56,13 +59,13 @@
     height: 300px;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 50% 50%;
-    margin-top: 80px;
+    margin-top: 70px;
     gap: 1em;
     align-content: center;
   }
 
   .activity {
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(250, 252, 246);
     padding: 7%;
     box-shadow: -2px 5px 15px -7px rgba(83, 83, 83, 0.32);
     transition: 0.2s;
