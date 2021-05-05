@@ -7,7 +7,7 @@
   import Email from './Email.svelte';
   import customActivities from './activities';
   import Footer from './Footer.svelte';
-  import { beforeUpdate, onMount, setContext } from 'svelte';
+  import { onMount, setContext } from 'svelte';
   import { Icon } from 'svelte-mui';
 
   import { Router, links, Route, navigate } from 'svelte-routing';
@@ -15,7 +15,9 @@
   export let url = '';
   const header = 'corona-bored';
 
-  let promise;
+  let promise = new Promise((res)=> {
+    res(['activity'])
+  })
   let promiseOptions;
   let options;
 
@@ -44,7 +46,6 @@
     if (!response.ok) {
       throw new Error('Fetch unsuccessful');
     }
-    console.log('gettodo')
     return await response.json();
   };
 

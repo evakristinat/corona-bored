@@ -57,12 +57,11 @@
     height: 100%;
     overflow: hidden;
     contain: content;
-    background-color: rgb(234, 234, 245);
+    background-color: rgb(194, 193, 230);
   }
   section{
     height: 100%;
   }
-
   .suggestion-box {
     width: 80%;
     max-width: 800px;

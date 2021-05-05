@@ -3,7 +3,7 @@
   import Categories from './Categories.svelte';
   import customActivities from './activities';
 
-  import { slide } from 'svelte/transition';
+  import { slide, fade } from 'svelte/transition';
   import { Button } from 'svelte-mui';
   import { createEventDispatcher } from 'svelte';
 
@@ -22,7 +22,7 @@
          koska arvot on varmistettu uniikeiksi jo aikaisemmin,
         eikä poistoja tehdä -->
       {#each $customActivities as activity}
-        <div class="activity">
+        <div class="activity" in:fade={{duration: 500}}>
           <p>
             {activity}
           </p>
@@ -103,7 +103,7 @@
       gap: 0.5em;
     }
     .activity > p {
-      font-size: 0.8em;
+      font-size: 1em;
     }
   }
 </style>

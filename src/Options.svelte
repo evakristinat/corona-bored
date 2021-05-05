@@ -81,6 +81,7 @@
     background-color: white;
     padding: 2%;
     margin: 0;
+    box-shadow: -2px 5px 15px -7px rgba(83, 83, 83, 0.32);
   }
   .quantity,
   .activity {
@@ -106,6 +107,9 @@
   @media (max-width: 400px) {
     form {
       width: 90%;
+    }
+    label{
+    padding-right: 1px;
     }
   }
 </style>

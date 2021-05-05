@@ -53,7 +53,7 @@
 
   header {
     padding: 0;
-    padding: 0;
+    padding-right: 1.2em;
     font-size: 0.8em;
     text-align: left;
     min-width: 100px;

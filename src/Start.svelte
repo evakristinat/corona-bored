@@ -92,10 +92,10 @@
   }
 
   #browse {
-    background-color: rgba(224, 224, 224, 0.089);
+    background-color: rgba(177, 177, 177, 0.349);
   }
   #random {
-    background-color: rgba(183, 105, 255, 0.068);
+    background-color: rgba(236, 232, 240, 0.363);
   }
 
   #browse > h2,
@@ -116,7 +116,8 @@
     margin: auto;
     text-align: left;
     color: white;
-    padding-bottom: 2vh;
+    padding-top: 1%;
+    padding-bottom: 4%;
   }
 
   p {

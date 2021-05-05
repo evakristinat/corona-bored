@@ -2,6 +2,7 @@
   import { Button } from 'svelte-mui';
   import { getContext } from 'svelte';
  
+
   //getContextin avulla setsetsetActivityType päivittyy suoraan app-komponenttiin.
   const setActivityType = getContext('setActivityType');
 
@@ -73,7 +74,7 @@
   .buttongroup {
     display: flex;
     justify-content: space-between;
-    padding-top: 20px;
+    padding-top: 0px;
     width: 100%;
     height: 50px;
     align-content: flex-end;
@@ -102,24 +103,24 @@
     label {
       padding-right: 0px;
     }
-  }
-  @media (max-width: 360px) {
+
     .buttongroup {
-      display: flex;
-      justify-content: space-between;
-      margin: auto;
-      width: 90%;
-      max-width: 800px;
-      height: 50px;
-      align-content: flex-end;
-    }
-    .buttongroup > div {
-      max-width: 100px;
-      min-width: none;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin: 1%;
-    }
+    display: flex;
+    justify-content:space-between;
+    padding-top: 0px;
+    width: 90%;
+    margin: auto;
+    height: 50px;
   }
+    .buttongroup > div {
+    width: 32.5%;
+    min-height: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0px;
+  }
+ 
+  }
+
 </style>
