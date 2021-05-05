@@ -7,7 +7,7 @@
   import Email from './Email.svelte';
   import customActivities from './activities';
   import Footer from './Footer.svelte';
-  import { setContext } from 'svelte';
+  import { beforeUpdate, onMount, setContext } from 'svelte';
   import { Icon } from 'svelte-mui';
 
   import { Router, links, Route, navigate } from 'svelte-routing';
@@ -20,9 +20,8 @@
   let options;
 
   //activityTypeen sijoitetaan valittu tyyppi (active,chill,social)
-  let activityType;
-
-  setContext('activityType', activityType);
+  let activityType ='chill';
+ 
   /*setContext välittää activityType muuttujan päivittävän funktion
   categories-komponentille*/
   setContext('setActivityType', (type) => (activityType = type));
@@ -43,8 +42,9 @@
       `http://www.boredapi.com/api/activity?${option}`
     );
     if (!response.ok) {
-      throw new Error('Fecth unsuccessful');
+      throw new Error('Fetch unsuccessful');
     }
+    console.log('gettodo')
     return await response.json();
   };
 
@@ -93,11 +93,11 @@
     navigate('result');
   };
 
-  /*promsise alkuarvo random-ehdotukselle. En käyttänyt onMount:ia
-  reitityksen vuoksi; mikäli yritetään siityä suoraan random-polulle,
- onMount ei tee tehtäväänsä ajoissa*/
+  /*promsise alkuarvo random-ehdotukselle.*/
 
+ onMount(()=>{
   promise = getToDo();
+ })
 
   //päivittää ehdotuksen valinnoilla. Käytössä Options-komponentin läpikäymisen jälkeen.
   const promiseop = () => {
@@ -120,6 +120,7 @@
     navigate('/');
   });
 </script>
+
 <!-- märitetään, että kohdellaan perinteisiä linkkejä router-linkkeinä-->
 <div id="app" use:links>
   <!--Router-osion hyvin yksinkertaistettu pohja täältä: https://www.npmjs.com/package/svelte-routing -->

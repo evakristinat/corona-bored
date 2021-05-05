@@ -2,7 +2,6 @@
   import { Button } from 'svelte-mui';
   import { getContext } from 'svelte';
  
-
   //getContextin avulla setsetsetActivityType päivittyy suoraan app-komponenttiin.
   const setActivityType = getContext('setActivityType');
 

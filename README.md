@@ -51,7 +51,7 @@ App, server.js
 ###### Svelte-mui: 
 Email, Categories, Options.. 
 
-Avustettua koodia löytyy komponenteista App (navigaation peruspohja) ja Random (await-blocks peruspohja). Avustettu koodi on server.js-tiedostoa lukuunottamatta siis vain pohjia, joiden päälle on rakennettu omaa koodia. Server.js saatu kokonaan kirjaston esimerkistä. Oman koodin osuus projektista on siis silti hyvin yli 95%.
+Avustettua koodia löytyy komponenteista App (navigaation peruspohja) ja Random (await-blocks peruspohja). Avustettu koodi on server.js-tiedostoa lukuunottamatta siis vain pohjia, joiden päälle on rakennettu omaa koodia. Server.js saatu kokonaan kirjaston esimerkistä. Oman koodin osuus projektista on siis silti yli 95%.
 
 
 #### Lähteet:
