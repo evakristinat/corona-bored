@@ -20,7 +20,7 @@ https://www.npmjs.com/package/svelte-routing
 https://svelte.dev/tutorial/await-blocks 
 
 
-###### Käytetyt komponentit ja ohjeistukset:
+###### Käytetyt komponentit ja kirjastot:
 
 https://www.npmjs.com/package/svelte-routing
 MIT License
